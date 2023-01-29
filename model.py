@@ -1,5 +1,6 @@
 import torch
 from torch import nn
+from torchinfo import summary
 # TODO: understand embedding dimension. Is not clear
 
 
@@ -17,7 +18,7 @@ class LookUpTable(nn.Module):
 
 
 class FirstConvLayer(nn.Module):
-    def __init__(self, skip_connection, want_shortcut=True):
+    def __init__(self, skip_connection, want_shortcut):
         super(FirstConvLayer, self).__init__()
         '''
         We first apply one layer of 64 convolutions of size 3
@@ -37,7 +38,7 @@ class FirstConvLayer(nn.Module):
 
 
 class ConvolutionalBlock(nn.Module):
-    def __init__(self, in_channels, out_channels, skip_connection, want_shortcut=True):
+    def __init__(self, in_channels, out_channels, skip_connection, want_shortcut):
         super(ConvolutionalBlock, self).__init__()
         '''
          Each convolutional block is a sequence of two convolutional layers, 
@@ -99,7 +100,8 @@ class FullyConnectedBlock(nn.Module):
             nn.ReLU(),
             nn.Linear(2048, 2048),
             nn.ReLU(),
-            nn.Linear(2048, n_class)
+            nn.Linear(2048, n_class),
+            nn.Softmax(n_class)
         )
 
     def forward(self, x):
@@ -107,26 +109,26 @@ class FullyConnectedBlock(nn.Module):
 
 
 class VDCNN(nn.Module):
-    def __init__(self, depth):
+    def __init__(self, depth, want_shortcut=False):
         super(VDCNN, self).__init__()
         channels = [64, 128, 256, 512]
         if depth == 9:
-            num_conv_block = [2, 2, 2, 2]
+            num_conv_block = [1, 1, 1, 1]
         elif depth == 17:
-            num_conv_block = [4, 4, 4, 4]
+            num_conv_block = [2, 2, 2, 2]
         elif depth == 29:
-            num_conv_block = [10, 10, 4, 4]
+            num_conv_block = [5, 5, 2, 2]
         else:
-            num_conv_block = [16, 16, 10, 6]
+            num_conv_block = [8, 8, 5, 3]
 
         self.skip_connection = SkipConnection()
         self.sequential = nn.Sequential(
             LookUpTable(),
-            FirstConvLayer(self.skip_connection)
+            FirstConvLayer(self.skip_connection, want_shortcut)
         )
         for x in range(len(num_conv_block)):
             for _ in range(num_conv_block[x]):
-                self.sequential.append(ConvolutionalBlock(channels[x], channels[x], self.skip_connection))
+                self.sequential.append(ConvolutionalBlock(channels[x], channels[x], self.skip_connection, want_shortcut))
             self.sequential.append(nn.MaxPool1d(kernel_size=3, stride=2, padding=1))
 
         self.sequential.append(FullyConnectedBlock(10))
@@ -135,3 +137,9 @@ class VDCNN(nn.Module):
         return self.sequential(x)
 
 
+if __name__ == "__main__":
+    device = torch.device("cuda")
+    model = VDCNN(depth=9)
+    model.eval().to(device)
+    summary(model)
+    #print(sum(p.numel() for p in model.parameters() if p.requires_grad))
