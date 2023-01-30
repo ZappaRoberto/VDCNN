@@ -94,7 +94,7 @@ class FullyConnectedBlock(nn.Module):
 
 
 class VDCNN(nn.Module):
-    def __init__(self, depth, want_shortcut=True):
+    def __init__(self, depth, n_classes, want_shortcut=True):
         super(VDCNN, self).__init__()
         channels = [64, 128, 256, 512]
         if depth == 9:
@@ -122,7 +122,7 @@ class VDCNN(nn.Module):
 
         self.sequential = self.sequential[:-1].append(nn.AdaptiveMaxPool1d(8))
 
-        self.fc = FullyConnectedBlock(10)
+        self.fc = FullyConnectedBlock(n_classes)
 
     def forward(self, x):
         out = self.sequential(x)
@@ -133,10 +133,7 @@ class VDCNN(nn.Module):
 
 
 if __name__ == "__main__":
-    if torch.cuda.is_available():
-        device = torch.device("cuda")
-    else:
-        device = torch.device('cpu')
-    model = VDCNN(depth=9)
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    model = VDCNN(depth=9, n_classes=10)
     model.eval().to(device)
     summary(model)

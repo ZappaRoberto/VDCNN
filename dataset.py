@@ -1,8 +1,6 @@
 from torch.utils.data import Dataset
-import torch
-import csv
 import pandas as pd
-import numpy as np
+import cupy as cy
 
 # 67 + padding -> (0) and unknown token -> (69)
 VOCABULARY = list("""£abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:’"/|_#$%^&*~‘+=<>()[]{} """)
@@ -42,7 +40,7 @@ class YahooDataset(Dataset):
         return len(self.label)
 
     def __getitem__(self, index):
-        return np.array(self.text[index], dtype=np.int64), self.label[index]
+        return cy.array(self.text[index], dtype=cy.int64), self.label[index]
 
 
 if __name__ == "__main__":
