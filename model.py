@@ -120,10 +120,13 @@ class VDCNN(nn.Module):
                 self.sequential.append(ConvolutionalBlock(channels[x], channels[x], self.skip_connection))
             self.sequential.append(nn.MaxPool1d(kernel_size=3, stride=2, padding=1))
 
+        self.sequential = self.sequential[:-1].append(nn.AdaptiveMaxPool1d(8))
+
         self.fc = FullyConnectedBlock(10)
 
     def forward(self, x):
         out = self.sequential(x)
+        out = out.view(out.size(0), -1)
         if self.skip_connection is not None:
             self.skip_connection.clean()
         return self.fc(out)
