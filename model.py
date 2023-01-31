@@ -16,9 +16,6 @@ class LookUpTable(nn.Module):
 class FirstConvLayer(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, skip_connection):
         super(FirstConvLayer, self).__init__()
-        '''
-        We first apply one layer of 64 convolutions of size 3
-        '''
         self.sequential = nn.Sequential(
             nn.Conv1d(in_channels, out_channels, kernel_size),
         )
@@ -30,35 +27,52 @@ class FirstConvLayer(nn.Module):
 
 
 class ConvolutionalBlock(nn.Module):
-    def __init__(self, in_channels, out_channels, skip_connection):
+    def __init__(self, in_channels, out_channels, skip_connection, downsample, last_layer):
         super(ConvolutionalBlock, self).__init__()
+        '''
+        if downsample:
+            self.conv1 = nn.Conv1d(in_channels=in_channels, out_channels=in_channels,
+                                   kernel_size=3, stride=2, padding=1, bias=False)
+        else:
+            self.conv1 = nn.Conv1d(in_channels=in_channels, out_channels=in_channels,
+                                   kernel_size=3, stride=1, padding=1, bias=False)
+        '''
+
         if skip_connection is not None:
             self.skip_connection = skip_connection
             self.shortcut = nn.Sequential(
-                nn.Conv1d(in_channels * 2, out_channels, kernel_size=1, stride=2, bias=False),
+                nn.Conv1d(in_channels, out_channels, kernel_size=1, stride=2, bias=False),
                 nn.BatchNorm1d(out_channels)
             )
 
         self.sequential = nn.Sequential(
-            nn.Conv1d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, padding='same', bias=False),
-            nn.BatchNorm1d(out_channels),
+            nn.Conv1d(in_channels=in_channels, out_channels=in_channels,
+                      kernel_size=3, stride=1, padding=1, bias=False),
+            nn.BatchNorm1d(in_channels),
             nn.ReLU(),
             nn.Conv1d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, padding='same', bias=False),
             nn.BatchNorm1d(out_channels),
-            nn.ReLU(),
         )
+        if downsample:
+            if last_layer:
+                self.skip_connection = None
+                self.sequential.append(nn.AdaptiveMaxPool1d(8))
+            else:
+                self.sequential.append(nn.MaxPool1d(kernel_size=3, stride=2, padding=1))
+
+        self.relu = nn.ReLU()
 
     def forward(self, x):
         if self.skip_connection is not None:
-            short = self.skip.get()
+            short = x
             out = self.sequential(x)
             if out.shape != short.shape:
                 short = self.shortcut(short)
-            out = torch.add(short, out)
-            self.skip_connection(out)
+            out = self.relu(short + out)
             return out
         else:
-            return self.sequential(x)
+            out = self.sequential(x)
+            return self.relu(out)
 
 
 class SkipConnection(nn.Module):
@@ -86,7 +100,7 @@ class FullyConnectedBlock(nn.Module):
             nn.Linear(2048, 2048),
             nn.ReLU(),
             nn.Linear(2048, n_class),
-            nn.Softmax(n_class)
+            nn.Softmax(dim=1)
         )
 
     def forward(self, x):
@@ -115,12 +129,18 @@ class VDCNN(nn.Module):
             LookUpTable(num_embedding=69, embedding_dim=16),
             FirstConvLayer(in_channels=16, out_channels=64, kernel_size=3, skip_connection=self.skip_connection)
         )
+        last_layer = False
         for x in range(len(num_conv_block)):
-            for _ in range(num_conv_block[x]):
-                self.sequential.append(ConvolutionalBlock(channels[x], channels[x], self.skip_connection))
-            self.sequential.append(nn.MaxPool1d(kernel_size=3, stride=2, padding=1))
-
-        self.sequential = self.sequential[:-1].append(nn.AdaptiveMaxPool1d(8))
+            for i in range(num_conv_block[x]):
+                if num_conv_block[x] - 1 == i:
+                    if len(num_conv_block) - 1 == x:
+                        last_layer = True
+                        self.sequential.append(
+                            ConvolutionalBlock(channels[x], channels[x], self.skip_connection, True, last_layer))
+                    else:
+                        self.sequential.append(ConvolutionalBlock(channels[x], channels[x] * 2, self.skip_connection, True, last_layer))
+                else:
+                    self.sequential.append(ConvolutionalBlock(channels[x], channels[x], self.skip_connection, False, last_layer))
 
         self.fc = FullyConnectedBlock(n_classes)
 

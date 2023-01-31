@@ -1,9 +1,9 @@
 from torch.utils.data import Dataset
 import pandas as pd
-import cupy as cy
+import numpy as np
 
 # 67 + padding -> (0) and unknown token -> (69)
-VOCABULARY = list("""£abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:’"/|_#$%^&*~‘+=<>()[]{} """)
+VOCABULARY = list("""abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:’"/|_#$%^&*~‘+=<>()[]{} """)
 
 
 class YahooDataset(Dataset):
@@ -14,33 +14,35 @@ class YahooDataset(Dataset):
 
         df = df.fillna('')
         df = df.astype(str)
+        df['label'] = df['label'].astype(int)
         df['question_title'] = df['question_title'].str.lower()
         df['question_content'] = df['question_content'].str.lower()
 
+        self.max_length = max_length
         self.text, self.label = [], []
 
         for row in df.itertuples():
-            self.label.append(row.label)
+            self.label.append(row.label - 1)  # from 0 to 9
             string = row.question_title + ' ' + row.question_content
             string = string.replace(r'\n', ' ')
             string = string.replace('  ', ' ')
-            tokenizer = []
-            for char in list(string):
-                if char in VOCABULARY:
-                    tokenizer.append(VOCABULARY.index(char) + 1)  # 0 is for padding
-                else:
-                    tokenizer.append(len(VOCABULARY) + 2)  # 69 is for unknown character
-            if len(tokenizer) > max_length:
-                tokenizer = tokenizer[:max_length]
-            elif len(tokenizer) < max_length:
-                tokenizer += [0] * (max_length - len(tokenizer))
-            self.text.append(tokenizer)
+            self.text.append(string)
 
     def __len__(self):
-        return len(self.label)
+        return 128  # len(self.label)
 
     def __getitem__(self, index):
-        return cy.array(self.text[index], dtype=cy.int64), self.label[index]
+        tokenizer = []
+        for char in list(self.text[index]):
+            if char in VOCABULARY:
+                tokenizer.append(VOCABULARY.index(char) + 1)  # 0 is for padding
+            else:
+                tokenizer.append(len(VOCABULARY) + 1)  # 68 is for unknown character
+        if len(tokenizer) > self.max_length:
+            tokenizer = tokenizer[:self.max_length]
+        elif len(tokenizer) < self.max_length:
+            tokenizer += [0] * (self.max_length - len(tokenizer))
+        return np.array(tokenizer, dtype=np.int64), np.array(self.label[index], dtype=np.int64)
 
 
 if __name__ == "__main__":
