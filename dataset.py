@@ -29,7 +29,7 @@ class YahooDataset(Dataset):
             self.text.append(string)
 
     def __len__(self):
-        return 128  # len(self.label)
+        return len(self.label)
 
     def __getitem__(self, index):
         tokenizer = []
