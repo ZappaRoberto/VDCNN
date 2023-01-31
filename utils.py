@@ -46,15 +46,12 @@ def get_loaders(train_dir, test_dir, batch_size, max_length, num_workers, pin_me
 
 def check_accuracy(loader, model, device="cuda"):
     num_correct = 0
-    num_pixels = 0
-    dice_score = 0
     model.eval()
-
     with torch.no_grad():
-        for x, y in loader:
-            x = x.to(device)
-            y = y.to(device).unsqueeze(1)
-            preds = torch.sigmoid(model(x))
+        for data, target in loader:
+            data = data.to(device)
+            target = target.to(device)
+            prediction = model(data)
             preds = (preds > 0.5).float()
             num_correct += (preds == y).sum()
             num_pixels += torch.numel(preds)

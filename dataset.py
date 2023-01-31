@@ -23,9 +23,9 @@ class YahooDataset(Dataset):
 
         for row in df.itertuples():
             self.label.append(row.label - 1)  # from 0 to 9
-            string = row.question_title + ' ' + row.question_content
+            string = " ".join([row.question_title, row.question_content])
             string = string.replace(r'\n', ' ')
-            string = string.replace('  ', ' ')
+            string = ' '.join(string.split())
             self.text.append(string)
 
     def __len__(self):
