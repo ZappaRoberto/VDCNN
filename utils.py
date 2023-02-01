@@ -45,7 +45,7 @@ def get_loaders(train_dir, test_dir, batch_size, max_length, num_workers, pin_me
     return train_loader, test_loader
 
 
-def check_accuracy(loader, model, loss_fn, device):
+def check_accuracy(loader, model, loss_fn, scheduler, device):
     running_loss = 0
     correct = 0
     total = 0
@@ -56,6 +56,7 @@ def check_accuracy(loader, model, loss_fn, device):
             target = target.to(device, non_blocking=True)
             prediction = model(data)
             loss = loss_fn(prediction, target)
+            scheduler.step(loss)
             running_loss += loss.item()
             _, predicted = prediction.max(dim=1)
             total += target.size(0)
@@ -70,16 +71,16 @@ def check_accuracy(loader, model, loss_fn, device):
 
 
 def save_plot(train_l, train_a, test_l, test_a):
-    plt.plot(train_a, '-o')
-    plt.plot(test_a, '-o')
+    plt.plot(train_a, 'b')
+    plt.plot(test_a, 'b')
     plt.xlabel('epoch')
     plt.ylabel('accuracy')
     plt.legend(['Train', 'Valid'])
     plt.title('Train vs Valid Accuracy')
     plt.savefig('result/Fig_1')
 
-    plt.plot(train_l, '-o')
-    plt.plot(test_l, '-o')
+    plt.plot(train_l, 'b')
+    plt.plot(test_l, 'b')
     plt.xlabel('epoch')
     plt.ylabel('losses')
     plt.legend(['Train', 'Valid'])

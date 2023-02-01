@@ -13,13 +13,13 @@ from utils import (
     save_plot)
 
 # Hyper parameters
-LEARNING_RATE = 0.01
+LEARNING_RATE = 0.1
 MOMENTUM = 0.9
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 BATCH_SIZE = 128
 MAX_LENGTH = 1024
-NUM_EPOCHS = 2  # 15
-PATIENCE = None
+NUM_EPOCHS = 1000
+PATIENCE = 20
 NUM_WORKERS = 12
 PIN_MEMORY = True
 LOAD_MODEL = False
@@ -64,36 +64,42 @@ def train_fn(epoch, loader, model, optimizer, loss_fn, scaler):
     return train_loss, train_accuracy
 
 
-def controller():
-    pass
-
-
 def main():
     torch.backends.cudnn.benchmark = True
     model = VDCNN(depth=9, n_classes=10).to(DEVICE)
+    if LOAD_MODEL:
+        load_checkpoint(torch.load("my_checkpoint.pth.tar"), model)
     optimizer = optim.SGD(model.parameters(), lr=LEARNING_RATE, momentum=MOMENTUM)
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min',
+                                                     factor=0.1, patience=10, threshold=0.0001,
+                                                     threshold_mode='rel')
     loss_fn = nn.CrossEntropyLoss()
     scaler = torch.cuda.amp.GradScaler()
     train_loader, test_loader = get_loaders(TRAIN_DIR, TEST_DIR, BATCH_SIZE, MAX_LENGTH, NUM_WORKERS, PIN_MEMORY)
     train_l, train_a, test_l, test_a = [], [], [], []
 
-    accuracy = 0
+    patience = PATIENCE
+    min_test_loss = 1000
     for epoch in range(NUM_EPOCHS):
         train_loss, train_accuracy = train_fn(epoch, train_loader, model, optimizer, loss_fn, scaler)
         # check accuracy
-        test_loss, test_accuracy = check_accuracy(test_loader, model, loss_fn, device=DEVICE)
+        test_loss, test_accuracy = check_accuracy(test_loader, model, loss_fn, scheduler, device=DEVICE)
         train_l.append(train_loss)
         train_a.append(train_accuracy)
         test_l.append(test_loss)
         test_a.append(test_accuracy)
         # save model
-        if test_accuracy > accuracy:
-            accuracy = test_accuracy
+        if test_loss < min_test_loss:
+            min_test_loss = test_loss
+            patience = PATIENCE
             checkpoint = {
                 "state_dict": model.state_dict(),
                 "optimizer": optimizer.state_dict(),
             }
             save_checkpoint(checkpoint)
+        if patience == 0:
+            break
+        patience -= 1
     save_plot(train_l, train_a, test_l, test_a)
     sys.exit()
 
