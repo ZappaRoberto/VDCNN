@@ -4,7 +4,7 @@ from dataset import YahooDataset
 import matplotlib.pyplot as plt
 
 
-def save_checkpoint(state, filename="checkpoint.pth.tar"):
+def save_checkpoint(state, filename="result/checkpoint.pth.tar"):
     print("=> Saving checkpoint")
     torch.save(state, filename)
 
@@ -76,7 +76,7 @@ def save_plot(train_l, train_a, test_l, test_a):
     plt.ylabel('accuracy')
     plt.legend(['Train', 'Valid'])
     plt.title('Train vs Valid Accuracy')
-    plt.show()
+    plt.savefig('result/Fig_1')
 
     plt.plot(train_l, '-o')
     plt.plot(test_l, '-o')
@@ -84,4 +84,4 @@ def save_plot(train_l, train_a, test_l, test_a):
     plt.ylabel('losses')
     plt.legend(['Train', 'Valid'])
     plt.title('Train vs Valid Losses')
-    plt.show()
+    plt.savefig('result/Fig_2')

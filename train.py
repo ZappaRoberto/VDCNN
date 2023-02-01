@@ -1,3 +1,5 @@
+import sys
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -16,7 +18,7 @@ MOMENTUM = 0.9
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 BATCH_SIZE = 128
 MAX_LENGTH = 1024
-NUM_EPOCHS = 100  # 15
+NUM_EPOCHS = 2  # 15
 PATIENCE = None
 NUM_WORKERS = 12
 PIN_MEMORY = True
@@ -55,10 +57,15 @@ def train_fn(epoch, loader, model, optimizer, loss_fn, scaler):
         total += target.size(0)
         correct += predicted.eq(target).sum().item()
 
+    loop.close()
     train_loss = running_loss / len(loop)
     train_accuracy = 100 * correct / total
 
     return train_loss, train_accuracy
+
+
+def controller():
+    pass
 
 
 def main():
@@ -88,6 +95,7 @@ def main():
             }
             save_checkpoint(checkpoint)
     save_plot(train_l, train_a, test_l, test_a)
+    sys.exit()
 
 
 if __name__ == "__main__":
