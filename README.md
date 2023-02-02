@@ -16,19 +16,19 @@ This repository is a personal implementation of this paper using pytorch.
 
 ## Table Of Content
 
-- [Architecture Analysis](#Architecture Analysis)
+- [Architecture Analysis](#Architecture-Analysis)
     - [Paper](#Paper)
     - [Code](#Code)
 - [Dataset](#Dataset)
-    - [Yahoo! Answer](#Yahoo! Answer)
-    - [Amazon Reviews](#Amazon Reviews)
+    - [Yahoo! Answer](#Yahoo!-Answer)
+    - [Amazon Reviews](#Amazon-Reviews)
 - [Training](#Training)
-    - [Yahoo! Answer](#Yahoo! Answer)
-    - [Amazon Reviews](#Amazon Reviews)
-- [Result Analysis](#Result Analysis)
-    - [Text Classification](#Text Classification)
-    - [Sentiment Analysis](#Sentiment Analysis)
-- [Installation Guide](#Installation Guide)
+    - [Yahoo! Answer](#Yahoo!-Answer)
+    - [Amazon Reviews](#Amazon-Reviews)
+- [Result Analysis](#Result-Analysis)
+    - [Text Classification](#Text-Classification)
+    - [Sentiment Analysis](#Sentiment-Analysis)
+- [Installation Guide](#Installation-Guide)
 - [License](#license)
 - [Links](#links)
 
