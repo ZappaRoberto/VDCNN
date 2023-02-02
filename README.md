@@ -10,7 +10,7 @@
 VDCNN is a neural network that use deep architectures of many convolutional layers to approach text classification and sentiment analysis using up to 29 layers.
 You could read the original paper at the following [link](https://aclanthology.org/E17-1104/).
 
-This repository is a personal implementation of this paper using pytorch. 
+This repository is a personal implementation of this paper using PyTorch 1.13. 
 
 
 ## Table Of Content
@@ -138,3 +138,8 @@ class VDCNN(nn.Module):
     def __init__(self, depth, n_classes, want_shortcut=True, pool_type='VGG'):
 ```
 The last class named VDCNN build all the layer in the right way and with the variable **`depth`** we can choose how many layer to add to our net. The paper present 4 different level of depth: 9, 17, 29, 49.
+
+
+## Dataset
+
+The dataset used for the training part are the yahoo
