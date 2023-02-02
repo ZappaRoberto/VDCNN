@@ -71,8 +71,8 @@ def check_accuracy(loader, model, loss_fn, scheduler, device):
 
 
 def save_plot(train_l, train_a, test_l, test_a):
-    plt.plot(train_a, '-o')
-    plt.plot(test_a, '-o')
+    plt.plot(train_a, '-')
+    plt.plot(test_a, '-')
     plt.xlabel('epoch')
     plt.ylabel('accuracy')
     plt.legend(['Train', 'Valid'])
@@ -80,8 +80,8 @@ def save_plot(train_l, train_a, test_l, test_a):
     plt.savefig('result/Fig_1')
     plt.close()
 
-    plt.plot(train_l, '-o')
-    plt.plot(test_l, '-o')
+    plt.plot(train_l, '-')
+    plt.plot(test_l, '-')
     plt.xlabel('epoch')
     plt.ylabel('losses')
     plt.legend(['Train', 'Valid'])

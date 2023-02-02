@@ -22,52 +22,57 @@ class FirstConvLayer(nn.Module):
 
 
 class ConvolutionalBlock(nn.Module):
-    def __init__(self, in_channels, out_channels, want_shortcut, downsample, last_layer):
+    def __init__(self, in_channels, out_channels, want_shortcut, downsample, last_layer, pool_type='vgg'):
         super(ConvolutionalBlock, self).__init__()
-        '''
-        if downsample:
-            self.conv1 = nn.Conv1d(in_channels=in_channels, out_channels=in_channels,
-                                   kernel_size=3, stride=2, padding=1, bias=False)
-        else:
-            self.conv1 = nn.Conv1d(in_channels=in_channels, out_channels=in_channels,
-                                   kernel_size=3, stride=1, padding=1, bias=False)
-        '''
 
-        if want_shortcut:
-            self.want_shortcut = want_shortcut
+        self.want_shortcut = want_shortcut
+        if self.want_shortcut:
             self.shortcut = nn.Sequential(
                 nn.Conv1d(in_channels, out_channels, kernel_size=1, stride=2, bias=False),
                 nn.BatchNorm1d(out_channels)
             )
 
         self.sequential = nn.Sequential(
-            nn.Conv1d(in_channels=in_channels, out_channels=in_channels,
-                      kernel_size=3, stride=1, padding=1, bias=False),
             nn.BatchNorm1d(in_channels),
             nn.ReLU(),
             nn.Conv1d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, padding='same', bias=False),
             nn.BatchNorm1d(out_channels),
             nn.ReLU()
         )
+
+        self.conv1 = nn.Conv1d(in_channels=in_channels, out_channels=in_channels,
+                               kernel_size=3, stride=1, padding=1, bias=False)
+
         if downsample:
             if last_layer:
-                self.want_shortcut = None
+                self.want_shortcut = False
                 self.sequential.append(nn.AdaptiveMaxPool1d(8))
             else:
-                self.sequential.append(nn.MaxPool1d(kernel_size=3, stride=2, padding=1))
+                if pool_type == 'resnet':
+                    self.conv1 = nn.Conv1d(in_channels=in_channels, out_channels=in_channels,
+                                           kernel_size=3, stride=2, padding=1, bias=False)
+                elif pool_type == 'kmax':
+                    channels = [64, 128, 256, 512]
+                    dimension = [511, 256, 128]
+                    index = channels.index(in_channels)
+                    self.sequential.append(nn.AdaptiveMaxPool1d(dimension[index]))
+                else:
+                    self.sequential.append(nn.MaxPool1d(kernel_size=3, stride=2, padding=1))
 
         self.relu = nn.ReLU()
 
     def forward(self, x):
         if self.want_shortcut:
             short = x
-            out = self.sequential(x)
+            out = self.conv1(x)
+            out = self.sequential(out)
             if out.shape != short.shape:
                 short = self.shortcut(short)
             out = self.relu(short + out)
             return out
         else:
-            return self.sequential(x)
+            out = self.conv1(x)
+            return self.sequential(out)
 
 
 class FullyConnectedBlock(nn.Module):
@@ -87,7 +92,7 @@ class FullyConnectedBlock(nn.Module):
 
 
 class VDCNN(nn.Module):
-    def __init__(self, depth, n_classes, want_shortcut=True):
+    def __init__(self, depth, n_classes, want_shortcut=True, pool_type='VGG'):
         super(VDCNN, self).__init__()
         channels = [64, 128, 256, 512]
         if depth == 9:
@@ -112,9 +117,11 @@ class VDCNN(nn.Module):
                         self.sequential.append(
                             ConvolutionalBlock(channels[x], channels[x], want_shortcut, True, last_layer))
                     else:
-                        self.sequential.append(ConvolutionalBlock(channels[x], channels[x] * 2, want_shortcut, True, last_layer))
+                        self.sequential.append(ConvolutionalBlock(channels[x], channels[x] * 2,
+                                                                  want_shortcut, True, last_layer, pool_type))
                 else:
-                    self.sequential.append(ConvolutionalBlock(channels[x], channels[x], want_shortcut, False, last_layer))
+                    self.sequential.append(ConvolutionalBlock(channels[x], channels[x],
+                                                              want_shortcut, False, last_layer, pool_type))
 
         self.fc = FullyConnectedBlock(n_classes)
 

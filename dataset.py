@@ -22,11 +22,46 @@ class YahooDataset(Dataset):
         self.text, self.label = [], []
 
         for row in df.itertuples():
-            self.label.append(row.label - 1)  # from 0 to 9
+            self.label.append(row.label - 1)  # from 0 to 4
             string = " ".join([row.question_title, row.question_content])
             string = string.replace(r'\n', ' ')
-            string = string[:self.max_length]
             string = ' '.join(string.split())
+            string = string[:self.max_length]
+            self.text.append(string)
+
+    def __len__(self):
+        return len(self.label)
+
+    def __getitem__(self, index):
+        tokenizer = []
+        for char in list(self.text[index]):
+            if char in VOCABULARY:
+                tokenizer.append(VOCABULARY.index(char) + 1)  # 0 is for padding
+            else:
+                tokenizer.append(len(VOCABULARY) + 1)  # 68 is for unknown character
+        if len(tokenizer) < self.max_length:
+            tokenizer += [0] * (self.max_length - len(tokenizer))
+        return np.array(tokenizer, dtype=np.int64), np.array(self.label[index], dtype=np.int64)
+
+
+class AmazonDataset(Dataset):
+    def __init__(self, path, max_length=1024):
+        df = pd.read_csv(path, delimiter=',', names=['label', 'review_title', 'review_content'])
+        df = df.fillna('')
+        df = df.astype(str)
+        df['label'] = df['label'].astype(int)
+        df['review_title'] = df['review_title'].str.lower()
+        df['review_content'] = df['review_content'].str.lower()
+
+        self.max_length = max_length
+        self.text, self.label = [], []
+
+        for row in df.itertuples():
+            self.label.append(row.label - 1)  # from 0 to 9
+            string = " ".join([row.review_title, row.review_content])
+            string = string.replace(r'\n', ' ')
+            string = ' '.join(string.split())
+            string = string[:self.max_length]
             self.text.append(string)
 
     def __len__(self):
@@ -45,4 +80,5 @@ class YahooDataset(Dataset):
 
 
 if __name__ == "__main__":
-    YahooDataset("dataset/test.csv")
+    # YahooDataset("dataset/test.csv")
+    AmazonDataset("dataset/amazon/test.csv")
