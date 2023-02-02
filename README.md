@@ -33,7 +33,9 @@ This repository is a personal implementation of this paper using pytorch.
 ## Architecture Analysis
 
 The overall architecture of this network is shown in the following Figure:
-![VDCNN Architecture](https://user-images.githubusercontent.com/213803/211545083-d0820b63-26f2-453e-877f-ecd5ec128713.jpg)
+<p align="center">
+  <img src="https://github.com/ZappaRoberto/VDCNN/blob/main/img/architecture.png" />
+</p>
 
 The latest TYPO3 version can be installed via composer. This is especially useful, if you want to create new TYPO3 installations automatically or play with the latest code. You need to install the composer package first, if it isn't already available:
 
