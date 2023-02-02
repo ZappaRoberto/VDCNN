@@ -9,7 +9,7 @@
 ![Release](https://img.shields.io/github/v/release/ZappaRoberto/VDCNN?color=purple)
 
 
-VDCNN is a neural network that use deep architectures of many convolutional layers to approach text classification and sentiment analysis using up to 29 layers.
+VDCNN is a neural network that use deep architectures of many convolutional layers to approach text classification and sentiment analysis using up to 49 layers.
 You could read the original paper at the following [link](https://aclanthology.org/E17-1104/).
 
 This repository is a personal implementation of this paper using PyTorch 1.13. 
@@ -37,7 +37,9 @@ The overall architecture of this network is shown in the following figure:
   <img src="https://github.com/ZappaRoberto/VDCNN/blob/main/img/architecture.png" />
 </p>
 
-The first block is a **`lookup table`** that generates a 2D tensor  of size (f0, s) that contain the embeddings of the s characters. The output dimension of the nn.Embedding layer is (s, f0), so we need to do the transpose in order to have the right output dimension. 
+The first block is a **`lookup table`** that generates a 2D tensor  of size (f0, s) that contain the embeddings of the s characters.
+> **Note**
+> The output dimension of the nn.Embedding layer is (s, f0), use .transpose in order to have the right output dimension.
 
 ```python
 class LookUpTable(nn.Module):
@@ -152,7 +154,7 @@ The dataset used for the training part are the yahoo
 > **Note**
 > If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
 
-## Support [![](https://raw.githubusercontent.com/aregtech/areg-sdk/master/docs/img/pin.svg)]()
+## Support 🌟
 
 <a href="https://www.buymeacoffee.com/5Zn8Xh3l9" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
