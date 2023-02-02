@@ -140,7 +140,7 @@ class VDCNN(nn.Module):
     def __init__(self, depth, n_classes, want_shortcut=True, pool_type='VGG'):
 ```
 The last class named VDCNN build all the layer in the right way and with the variable **`depth`** we can choose how many layer to add to our net. The paper present 4 different level of depth: 9, 17, 29, 49. You can find all theese piece of code inside the **model.py** file.
-<div align="right">[ <a href="#table-of-content">↑ to top ↑</a> ]</div>
+<div align="right">[ <a href="#Table-Of-Content">↑ to top ↑</a> ]</div>
 
 
 ## Dataset [![](https://raw.githubusercontent.com/aregtech/areg-sdk/master/docs/img/pin.svg)]()
