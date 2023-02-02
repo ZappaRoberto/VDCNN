@@ -37,7 +37,7 @@ The overall architecture of this network is shown in the following figure:
 
 The first block is a **`lookup table`** that generates a 2D tensor  of size (f0, s) that contain the embeddings of the s characters. The output dimension of the nn.Embedding layer is (s, f0), so we need to do the transpose in order to have the right output dimension. 
 
-```bash
+```python
 class LookUpTable(nn.Module):
     def __init__(self, num_embedding, embedding_dim):
         super(LookUpTable, self).__init__()
@@ -49,7 +49,7 @@ class LookUpTable(nn.Module):
 
 The second layer is a **`convolutional layer`** with in_channel dimension of 64 and kernel dimension of size 3.
 
-```bash
+```python
 class FirstConvLayer(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size):
         super(FirstConvLayer, self).__init__()
@@ -62,7 +62,7 @@ The third layer is a **`convolutional block layer`** structured as shown in the 
 </p>
 We have also the possibility to add short-cut and in some layer we have to half the resolution with pooling. We can choose between three different pooling method: resnet like, VGG like or with k-max pooling.
 
-```bash
+```python
 class ConvolutionalBlock(nn.Module):
     def __init__(self, in_channels, out_channels, want_shortcut, downsample, last_layer, pool_type='vgg'):
         super(ConvolutionalBlock, self).__init__()
@@ -77,7 +77,7 @@ class ConvolutionalBlock(nn.Module):
 
 with the variable **`want_shortcut`** we can choose if we want add shortcut to our net.
 
-```bash
+```python
 
         self.sequential = nn.Sequential(
             nn.BatchNorm1d(in_channels),
@@ -93,7 +93,7 @@ with the variable **`want_shortcut`** we can choose if we want add shortcut to o
 
 in this piece of code we build the core part of the convolutional block, as shown in the previously figure. self.conv1 can't be added in self.sequential because its stride depends on the type of pooling we want to use.
 
-```bash
+```python
 
         if downsample:
             if last_layer:
@@ -116,7 +116,7 @@ in this piece of code we build the core part of the convolutional block, as show
 
 the final part of this layer manage the type of pooling that we want to use. We can select the pooling type with the variable **`pool_type`**. The last layer use always k-max pooling with dimension 8 and for this reason we manage this difference between previously layer with the variable **`last_layer`**.
 
-```bash
+```python
 class FullyConnectedBlock(nn.Module):
     def __init__(self, n_class):
         super(FullyConnectedBlock, self).__init__()
@@ -132,7 +132,7 @@ class FullyConnectedBlock(nn.Module):
 
 After the sequence of convolutional blocks we have 3 fully connected layer where we have to choose the output number of classes. Different task require different number of classes. We choose the number of classes with the variable **`n_class`**. Since we want to have the probability of each class given a text we use the softmax.
 
-```bash
+```python
 
 class VDCNN(nn.Module):
     def __init__(self, depth, n_classes, want_shortcut=True, pool_type='VGG'):
