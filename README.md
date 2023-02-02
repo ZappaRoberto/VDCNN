@@ -37,18 +37,30 @@ The overall architecture of this network is shown in the following Figure:
   <img src="https://github.com/ZappaRoberto/VDCNN/blob/main/img/architecture.png" />
 </p>
 
-The latest TYPO3 version can be installed via composer. This is especially useful, if you want to create new TYPO3 installations automatically or play with the latest code. You need to install the composer package first, if it isn't already available:
+The first block is a **`lookup table`** that generates a 2D tensor  of size (f0, s) that contain the embeddings of the s characters. The output dimension of the nn.Embedding layer is (s, f0), so we need to do the transpose in order to have the right output dimension. 
 
 ```bash
-php -r "readfile('https://getcomposer.org/installer');" | php -- --filename=composer
+class LookUpTable(nn.Module):
+    def __init__(self, num_embedding, embedding_dim):
+        super(LookUpTable, self).__init__()
+        self.embeddings = nn.Embedding(num_embedding, embedding_dim)
+
+    def forward(self, x):
+        return self.embeddings(x).transpose(1, 2)
 ```
 
-To install the TYPO3 base distribution first, execute this command:
+The second layer is a **`convolutional layer`** with in_channel dimension of 64 and kernel dimension of size 3.
 
 ```bash
-composer create-project typo3/cms-base-distribution myshop
-# or install a specific TYPO3 version:
-composer create-project "typo3/cms-base-distribution:^11" myshop
+class FirstConvLayer(nn.Module):
+    def __init__(self, in_channels, out_channels, kernel_size):
+        super(FirstConvLayer, self).__init__()
+        self.sequential = nn.Sequential(nn.Conv1d(in_channels, out_channels, kernel_size))
+
+    def forward(self, x):
+        return self.sequential(x)
 ```
 
-It will install TYPO3 into the `./myshop/` directory. Change into the directory and install TYPO3 as usual:
+The third layer is a **`convolutional block layer`** structured as shown in the following figure.
+
+
