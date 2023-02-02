@@ -15,7 +15,7 @@ You could read the original paper at the following [link](https://aclanthology.o
 This repository is a personal implementation of this paper using PyTorch 1.13. 
 
 
-## Table Of Content[![](https://raw.githubusercontent.com/aregtech/areg-sdk/master/docs/img/pin.svg)]()
+## Table Of Content
 
 - [Architecture Analysis](#Architecture-Analysis)
 - [Dataset](#Dataset)
@@ -30,7 +30,7 @@ This repository is a personal implementation of this paper using PyTorch 1.13.
 - [Installation Guide](#Installation-Guide)
 
 
-## Architecture Analysis [![](https://raw.githubusercontent.com/aregtech/areg-sdk/master/docs/img/pin.svg)]()
+## Architecture Analysis
 
 The overall architecture of this network is shown in the following figure:
 <p align="center">
@@ -143,7 +143,7 @@ The last class named VDCNN build all the layer in the right way and with the var
 <div align="right">[ <a href="#Table-Of-Content">↑ to top ↑</a> ]</div>
 
 
-## Dataset [![](https://raw.githubusercontent.com/aregtech/areg-sdk/master/docs/img/pin.svg)]()
+## Dataset
 
 The dataset used for the training part are the yahoo
 > **Warning**
@@ -157,3 +157,17 @@ The dataset used for the training part are the yahoo
 <a href="https://www.buymeacoffee.com/5Zn8Xh3l9" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
 :bulb:
+
+|                            | 🔰 ArminC AutoExec  | ◾ Other Configs |
+| -------------------------- | :----------------: | :-------------: |
+| Optimized values           |         ✔️         |        ❌        |
+| Useful scripts             |         ✔️         |        ❌        |
+| Documented commands        |         ✔️         |        ❌        |
+| Enabled in-game advantages |         ✔️         |        ❌        |
+| No misconcepted commands   |         ✔️         |        ❌        |
+| Professional info sources  |         ✔️         |        ❌        |
+| Clean sheet/template       |         ✔️         |        ❌        |
+| Easy to customize          |         ✔️         |        ❌        |
+| Categorized by functions   |         ✔️         |        ❌        |
+| New commands/values        |         ✔️         |        ❌        |
+| No old command leftovers   |         ✔️         |        ❌        |
