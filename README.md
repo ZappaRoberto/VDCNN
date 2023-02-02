@@ -26,13 +26,11 @@ This repository is a personal implementation of this paper using pytorch.
     - [Text Classification](#Text-Classification)
     - [Sentiment Analysis](#Sentiment-Analysis)
 - [Installation Guide](#Installation-Guide)
-- [License](#license)
-- [Links](#links)
 
 
 ## Architecture Analysis
 
-The overall architecture of this network is shown in the following Figure:
+The overall architecture of this network is shown in the following figure:
 <p align="center">
   <img src="https://github.com/ZappaRoberto/VDCNN/blob/main/img/architecture.png" />
 </p>
@@ -61,6 +59,9 @@ class FirstConvLayer(nn.Module):
         return self.sequential(x)
 ```
 
-The third layer is a **`convolutional block layer`** structured as shown in the following figure.
+The third layer is a **`convolutional block layer`** structured as shown in the following figure:
+<p align="center">
+  <img src="https://github.com/ZappaRoberto/VDCNN/blob/main/img/conv_block.png" />
+</p>
 
 
