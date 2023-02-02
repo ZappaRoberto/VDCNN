@@ -114,7 +114,7 @@ in this piece of code we build the core part of the convolutional block, as show
         self.relu = nn.ReLU()
 ```
 
-the final part of this layer manage the type of pooling that we want to use. We can select the pooling type with the variable **`pool_type`**. The last layer of the net use always k-max pooling with dimension 8 and for this reason we manage this difference between previously layer with the variable **`last_layer`**.
+the final part of this layer manage the type of pooling that we want to use. We can select the pooling type with the variable **`pool_type`**. The last layer use always k-max pooling with dimension 8 and for this reason we manage this difference between previously layer with the variable **`last_layer`**.
 
 ```bash
 class FullyConnectedBlock(nn.Module):
