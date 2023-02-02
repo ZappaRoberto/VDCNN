@@ -6,6 +6,8 @@
 
 [![Total Downloads](https://img.shields.io/github/downloads/ZappaRoberto/VDCNN/total.svg)]()
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+![Release](https://img.shields.io/github/v/release/ZappaRoberto/VDCNN?color=purple)
+
 
 VDCNN is a neural network that use deep architectures of many convolutional layers to approach text classification and sentiment analysis using up to 29 layers.
 You could read the original paper at the following [link](https://aclanthology.org/E17-1104/).
@@ -13,7 +15,7 @@ You could read the original paper at the following [link](https://aclanthology.o
 This repository is a personal implementation of this paper using PyTorch 1.13. 
 
 
-## Table Of Content
+## Table Of Content [![](https://raw.githubusercontent.com/aregtech/areg-sdk/master/docs/img/pin.svg)]()
 
 - [Architecture Analysis](#Architecture-Analysis)
 - [Dataset](#Dataset)
@@ -28,7 +30,7 @@ This repository is a personal implementation of this paper using PyTorch 1.13.
 - [Installation Guide](#Installation-Guide)
 
 
-## Architecture Analysis
+## Architecture Analysis [![](https://raw.githubusercontent.com/aregtech/areg-sdk/master/docs/img/pin.svg)]()
 
 The overall architecture of this network is shown in the following figure:
 <p align="center">
@@ -140,7 +142,7 @@ class VDCNN(nn.Module):
 The last class named VDCNN build all the layer in the right way and with the variable **`depth`** we can choose how many layer to add to our net. The paper present 4 different level of depth: 9, 17, 29, 49. You can find all theese piece of code inside the **model.py** file.
 
 
-## Dataset
+## Dataset [![](https://raw.githubusercontent.com/aregtech/areg-sdk/master/docs/img/pin.svg)]()
 
 The dataset used for the training part are the yahoo
 > **Warning**
@@ -149,6 +151,8 @@ The dataset used for the training part are the yahoo
 > **Note**
 > If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
 
-## Support
+## Support [![](https://raw.githubusercontent.com/aregtech/areg-sdk/master/docs/img/pin.svg)]()
 
 <a href="https://www.buymeacoffee.com/5Zn8Xh3l9" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+
+:bulb:
