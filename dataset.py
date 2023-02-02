@@ -25,6 +25,7 @@ class YahooDataset(Dataset):
             self.label.append(row.label - 1)  # from 0 to 9
             string = " ".join([row.question_title, row.question_content])
             string = string.replace(r'\n', ' ')
+            string = string[:self.max_length]
             string = ' '.join(string.split())
             self.text.append(string)
 
@@ -38,13 +39,10 @@ class YahooDataset(Dataset):
                 tokenizer.append(VOCABULARY.index(char) + 1)  # 0 is for padding
             else:
                 tokenizer.append(len(VOCABULARY) + 1)  # 68 is for unknown character
-        if len(tokenizer) > self.max_length:
-            tokenizer = tokenizer[:self.max_length]
-        elif len(tokenizer) < self.max_length:
+        if len(tokenizer) < self.max_length:
             tokenizer += [0] * (self.max_length - len(tokenizer))
         return np.array(tokenizer, dtype=np.int64), np.array(self.label[index], dtype=np.int64)
 
 
 if __name__ == "__main__":
     YahooDataset("dataset/test.csv")
-

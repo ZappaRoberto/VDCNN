@@ -56,7 +56,6 @@ def check_accuracy(loader, model, loss_fn, scheduler, device):
             target = target.to(device, non_blocking=True)
             prediction = model(data)
             loss = loss_fn(prediction, target)
-            scheduler.step(loss)
             running_loss += loss.item()
             _, predicted = prediction.max(dim=1)
             total += target.size(0)
@@ -64,6 +63,7 @@ def check_accuracy(loader, model, loss_fn, scheduler, device):
 
     accuracy = correct / total * 100
     loss = running_loss / len(loader)
+    scheduler.step(loss)
 
     print(f"Got on test set Accuracy: {accuracy:.3f} and Loss: {loss:.3f}")
     model.train()
@@ -71,18 +71,20 @@ def check_accuracy(loader, model, loss_fn, scheduler, device):
 
 
 def save_plot(train_l, train_a, test_l, test_a):
-    plt.plot(train_a, 'b')
-    plt.plot(test_a, 'b')
+    plt.plot(train_a, '-o')
+    plt.plot(test_a, '-o')
     plt.xlabel('epoch')
     plt.ylabel('accuracy')
     plt.legend(['Train', 'Valid'])
     plt.title('Train vs Valid Accuracy')
     plt.savefig('result/Fig_1')
+    plt.close()
 
-    plt.plot(train_l, 'b')
-    plt.plot(test_l, 'b')
+    plt.plot(train_l, '-o')
+    plt.plot(test_l, '-o')
     plt.xlabel('epoch')
     plt.ylabel('losses')
     plt.legend(['Train', 'Valid'])
     plt.title('Train vs Valid Losses')
     plt.savefig('result/Fig_2')
+    plt.close()

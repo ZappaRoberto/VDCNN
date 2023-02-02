@@ -1,6 +1,5 @@
 import torch
 from torch import nn
-import random
 from torchinfo import summary
 
 
@@ -48,6 +47,7 @@ class ConvolutionalBlock(nn.Module):
             nn.ReLU(),
             nn.Conv1d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, padding='same', bias=False),
             nn.BatchNorm1d(out_channels),
+            nn.ReLU()
         )
         if downsample:
             if last_layer:
@@ -67,8 +67,7 @@ class ConvolutionalBlock(nn.Module):
             out = self.relu(short + out)
             return out
         else:
-            out = self.sequential(x)
-            return self.relu(out)
+            return self.sequential(x)
 
 
 class FullyConnectedBlock(nn.Module):
