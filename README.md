@@ -38,8 +38,6 @@ The overall architecture of this network is shown in the following figure:
 </p>
 
 The first block is a **`lookup table`** that generates a 2D tensor  of size (f0, s) that contain the embeddings of the s characters.
-> **Note**
-> The output dimension of the nn.Embedding layer is (s, f0), use .transpose in order to have the right output dimension.
 
 ```python
 class LookUpTable(nn.Module):
@@ -50,6 +48,8 @@ class LookUpTable(nn.Module):
     def forward(self, x):
         return self.embeddings(x).transpose(1, 2)
 ```
+> **Note**
+> The output dimension of the nn.Embedding layer is (s, f0). Use **`.transpose`** in order to have the right output dimension.
 
 The second layer is a **`convolutional layer`** with in_channel dimension of 64 and kernel dimension of size 3.
 
