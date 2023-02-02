@@ -23,8 +23,8 @@ PATIENCE = 40
 NUM_WORKERS = 4
 PIN_MEMORY = True
 LOAD_MODEL = False
-TRAIN_DIR = "dataset/train.csv"
-TEST_DIR = "dataset/test.csv"
+TRAIN_DIR = "dataset/amazon/train.csv"
+TEST_DIR = "dataset/amazon/test.csv"
 
 
 def train_fn(epoch, loader, model, optimizer, loss_fn, scaler):
@@ -65,7 +65,7 @@ def train_fn(epoch, loader, model, optimizer, loss_fn, scaler):
 
 
 def main():
-    model = VDCNN(depth=9, n_classes=10, want_shortcut=True, pool_type='vgg').to(DEVICE)
+    model = VDCNN(depth=9, n_classes=5, want_shortcut=True, pool_type='vgg').to(DEVICE)
     if LOAD_MODEL:
         load_checkpoint(torch.load("my_checkpoint.pth.tar"), model)
     optimizer = optim.SGD(model.parameters(), lr=LEARNING_RATE, momentum=MOMENTUM)
