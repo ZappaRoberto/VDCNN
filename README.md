@@ -15,7 +15,7 @@ You could read the original paper at the following [link](https://aclanthology.o
 This repository is a personal implementation of this paper using PyTorch 1.13. 
 
 
-## Table Of Content [![](https://raw.githubusercontent.com/aregtech/areg-sdk/master/docs/img/pin.svg)]()
+## Table Of Content[![](https://raw.githubusercontent.com/aregtech/areg-sdk/master/docs/img/pin.svg)]()
 
 - [Architecture Analysis](#Architecture-Analysis)
 - [Dataset](#Dataset)
