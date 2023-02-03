@@ -1,5 +1,5 @@
 <a href="https://aimeos.org/">
-    <img src="https://github.com/pytorch/pytorch/blob/master/docs/source/_static/img/pytorch-logo-dark.png" alt="Pytorch logo" title="Pytorch" align="right" height="90" />
+    <img src="https://github.com/pytorch/pytorch/blob/master/docs/source/_static/img/pytorch-logo-dark.png" alt="Pytorch logo" title="Pytorch" align="right" height="80" />
 </a>
 
 # Very Deep Convolutional Networks for Text Classification
