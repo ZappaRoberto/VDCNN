@@ -238,6 +238,8 @@ def main():
     sys.exit()
 ```
 
+**`get_loaders`**, **`save_checkpoint`**, **`load_checkpoint`**, **`check_accuracy`**, **`save_plot`** that are use inside tran.py file are function that can be find inside utils.py.
+
 
 
 
