@@ -214,25 +214,13 @@ The main function is build to inizialize and manage the training part until the 
 
 def main():
     model = VDCNN(depth=9, n_classes=5, want_shortcut=True, pool_type='vgg').to(DEVICE)
-    if LOAD_MODEL:
-        load_checkpoint(torch.load("my_checkpoint.pth.tar"), model)
-    optimizer = optim.SGD(model.parameters(), lr=LEARNING_RATE, momentum=MOMENTUM)
-    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min',
-                                                     factor=0.1, patience=int(PATIENCE / 2), threshold=0.0001,
-                                                     threshold_mode='rel')
-    loss_fn = nn.CrossEntropyLoss()
-    scaler = torch.cuda.amp.GradScaler()
-    train_loader, test_loader = get_loaders(TRAIN_DIR, TEST_DIR, BATCH_SIZE, MAX_LENGTH, NUM_WORKERS, PIN_MEMORY)
-    train_l, train_a, test_l, test_a = [], [], [], []
-
-    patience = PATIENCE
-    min_test_loss = 1000
+    # training settings
     for epoch in range(NUM_EPOCHS):
         # run 1 epoch
         # check accuracy
-        # save model if test_loss < min_test_loss
-        # mange patience for early stopping
-    save_plot(train_l, train_a, test_l, test_a)
+        # save model
+        # manage patience for early stopping
+    # save plot
     sys.exit()
 ```
 
@@ -242,45 +230,30 @@ def main():
 
 **`get_loaders`**, **`save_checkpoint`**, **`load_checkpoint`**, **`check_accuracy`** and **`save_plot`**  are function used inside tran.py that can be finded inside utils.py.
 
+## Result Analysis
+
+For computational limitation I trained the models only with depth 9. the result showed below are the test error of my implementation and paper implementation.
+
+### Text Classification
+
+|     Pool Type     |  My Result  | Paper Result |
+| :---------------: | :---------: | :----------: |
+| Resnet            |      0      |      0       |
+| Max pooling       |      0      |      0       |
+| k-Max pooling     |      0      |      0       |
+
+
+### Sentiment Analysis
+
+|     Pool Type     |  My Result  | Paper Result |
+| :---------------: | :---------: | :----------: |
+| Resnet            |      0      |      0       |
+| Max pooling       |      0      |      0       |
+| k-Max pooling     |      0      |      0       |
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-> **Warning**
-> Be careful running this with elevated privileges. Code execution can be achieved with write permissions on the config file.
-
-> **Note**
-> If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
 
 ## Support 🌟
 
 <a href="https://www.buymeacoffee.com/5Zn8Xh3l9" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
-
-:bulb:
-
-|                            | 🔰 ArminC AutoExec  | ◾ Other Configs |
-| -------------------------- | :----------------: | :-------------: |
-| Optimized values           |         ✔️         |        ❌        |
-| Useful scripts             |         ✔️         |        ❌        |
-| Documented commands        |         ✔️         |        ❌        |
-| Enabled in-game advantages |         ✔️         |        ❌        |
-| No misconcepted commands   |         ✔️         |        ❌        |
-| Professional info sources  |         ✔️         |        ❌        |
-| Clean sheet/template       |         ✔️         |        ❌        |
-| Easy to customize          |         ✔️         |        ❌        |
-| Categorized by functions   |         ✔️         |        ❌        |
-| New commands/values        |         ✔️         |        ❌        |
-| No old command leftovers   |         ✔️         |        ❌        |
