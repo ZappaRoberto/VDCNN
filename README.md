@@ -230,6 +230,8 @@ def main():
 
 **`get_loaders`**, **`save_checkpoint`**, **`load_checkpoint`**, **`check_accuracy`** and **`save_plot`**  are function used inside tran.py that can be finded inside utils.py.
 
+<div align="right">[ <a href="#Table-Of-Content">↑ to top ↑</a> ]</div>
+
 ## Result Analysis
 
 For computational limitation I trained the models only with depth 9. the result showed below are the test error of my implementation and paper implementation.
@@ -251,9 +253,10 @@ For computational limitation I trained the models only with depth 9. the result 
 | Max pooling       |      0      |      0       |
 | k-Max pooling     |      0      |      0       |
 
-
+<div align="right">[ <a href="#Table-Of-Content">↑ to top ↑</a> ]</div>
 
 
 ## Support 🌟
 
+If You find this repo usefull and want other project like this:
 <a href="https://www.buymeacoffee.com/5Zn8Xh3l9" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
