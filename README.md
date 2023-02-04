@@ -24,7 +24,7 @@ This repository is a personal implementation of this paper using PyTorch 1.13.
 - [Result Analysis](#Result-Analysis)
     - [Text Classification](#Text-Classification)
     - [Sentiment Analysis](#Sentiment-Analysis)
-- [Installation Guide](#Installation-Guide)
+- [How to use](#How-to-use)
 
 
 ## Architecture Analysis
@@ -255,6 +255,9 @@ For computational limitation I trained the models only with depth 9. the result 
 
 <div align="right">[ <a href="#Table-Of-Content">↑ to top ↑</a> ]</div>
 
+## How to use
+
+You can't use it MUHAHAHAHAHAH
 
 ## Support 🌟
 
