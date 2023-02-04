@@ -48,6 +48,7 @@ class LookUpTable(nn.Module):
         return self.embeddings(x).transpose(1, 2)
 ```
 > **Note**
+> 
 > The output dimension of the nn.Embedding layer is (s, f0). Use **`.transpose`** in order to have the right output dimension.
 
 The second layer is a **`convolutional layer`** with in_channel dimension of 64 and kernel dimension of size 3.
@@ -141,12 +142,13 @@ class VDCNN(nn.Module):
     def __init__(self, depth, n_classes, want_shortcut=True, pool_type='VGG'):
 ```
 The last class named VDCNN build all the layer in the right way and with the variable **`depth`** we can choose how many layer to add to our net. The paper present 4 different level of depth: 9, 17, 29, 49. You can find all theese piece of code inside the **model.py** file.
+
 <div align="right">[ <a href="#Table-Of-Content">↑ to top ↑</a> ]</div>
 
 
 ## Dataset
 
-The dataset used for the training part are the [Yahoo! Answers Topic Classification](https://www.kaggle.com/datasets/b78db332b73c8b0caf9bd02e2f390bdffc75460ea6aaaee90d9c4bd6af30cad2) and a subset of [Amazon review data](https://cseweb.ucsd.edu/~jmcauley/datasets/amazon_v2/) that can be downloaded [here](https://drive.google.com/file/d/0Bz8a_Dbh9QhbZVhsUnRWRDhETzA/view?usp=share_link&resourcekey=0-Rp0ynafmZGZ5MflGmvwLGg). All this datasets are maneged by Dataset class inside dataset.py file. 
+The dataset used for the training part are the [Yahoo! Answers Topic Classification](https://www.kaggle.com/datasets/b78db332b73c8b0caf9bd02e2f390bdffc75460ea6aaaee90d9c4bd6af30cad2) and a subset of [Amazon review data](https://cseweb.ucsd.edu/~jmcauley/datasets/amazon_v2/) that can be downloaded [here](https://drive.google.com/file/d/0Bz8a_Dbh9QhbZVhsUnRWRDhETzA/view?usp=share_link&resourcekey=0-Rp0ynafmZGZ5MflGmvwLGg). All this datasets are maneged by **`Dataset class`** inside dataset.py file. 
 
 
 ### Yahoo! Answer topic classification
@@ -168,6 +170,89 @@ The Yahoo! Answers topic classification dataset is constructed using the 10 larg
 ### Amazon Reviews
 
 The Amazon Reviews dataset is constructed using 5 categories (star ratings).
+
+<div align="right">[ <a href="#Table-Of-Content">↑ to top ↑</a> ]</div>
+
+## Training
+
+> **Warning**
+> 
+> Even if it can be choosen the device between cpu or GPU, I used and tested the training part only with GPU.
+
+First things first, at the beginning of train.py file there are a some useful global variable that manage the key settings of the training.
+
+```python
+
+LEARNING_RATE = 0.01
+MOMENTUM = 0.9
+DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
+BATCH_SIZE = 128
+MAX_LENGTH = 1024
+NUM_EPOCHS = 1
+PATIENCE = 40
+NUM_WORKERS = 4
+PIN_MEMORY = True
+LOAD_MODEL = False
+TRAIN_DIR = "dataset/amazon/train.csv"
+TEST_DIR = "dataset/amazon/test.csv"
+```
+
+> **Note**
+> 
+> Change **`TRAIN_DIR`** and **`TEST_DIR`** with your local position of the datasets.
+
+The train_fn function is build to run one epoch and return the average loss and accuracy of the epoch.
+
+```python
+
+def train_fn(epoch, loader, model, optimizer, loss_fn, scaler):
+    # a bunch of code line
+    return train_loss, train_accuracy
+```
+
+The main function is build to inizialize and manage the training part until the end.
+
+```python
+
+def main():
+    model = VDCNN(depth=9, n_classes=5, want_shortcut=True, pool_type='vgg').to(DEVICE)
+    if LOAD_MODEL:
+        load_checkpoint(torch.load("my_checkpoint.pth.tar"), model)
+    optimizer = optim.SGD(model.parameters(), lr=LEARNING_RATE, momentum=MOMENTUM)
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min',
+                                                     factor=0.1, patience=int(PATIENCE / 2), threshold=0.0001,
+                                                     threshold_mode='rel')
+    loss_fn = nn.CrossEntropyLoss()
+    scaler = torch.cuda.amp.GradScaler()
+    train_loader, test_loader = get_loaders(TRAIN_DIR, TEST_DIR, BATCH_SIZE, MAX_LENGTH, NUM_WORKERS, PIN_MEMORY)
+    train_l, train_a, test_l, test_a = [], [], [], []
+
+    patience = PATIENCE
+    min_test_loss = 1000
+    for epoch in range(NUM_EPOCHS):
+        # run 1 epoch
+        # check accuracy
+        # save model if test_loss < min_test_loss
+        # mange patience
+    save_plot(train_l, train_a, test_l, test_a)
+    sys.exit()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 > **Warning**
