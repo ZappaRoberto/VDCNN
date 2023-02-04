@@ -11,7 +11,7 @@
 
 VDCNN is a neural network that use deep architectures of many convolutional layers to approach text classification and sentiment analysis using up to 49 layers.
 You could read the original paper at the following [link](https://aclanthology.org/E17-1104/).
-This repository is a personal implementation of this paper using PyTorch 1.13. 
+This repository is a personal implementation of this paper using [PyTorch 1.13](https://pytorch.org/). 
 
 
 ## Table Of Content
@@ -240,18 +240,18 @@ For computational limitation I trained the models only with depth 9. the result 
 
 |     Pool Type     |  My Result  | Paper Result |
 | :---------------: | :---------: | :----------: |
-| Resnet            |      0      |      0       |
-| Max pooling       |      0      |      0       |
-| k-Max pooling     |      0      |      0       |
+| Convolution       |      0      |     28.10    |
+| KMaxPooling       |      0      |     28.24    |
+| MaxPooling        |      0      |     27.60    |
 
 
 ### Sentiment Analysis
 
 |     Pool Type     |  My Result  | Paper Result |
 | :---------------: | :---------: | :----------: |
-| Resnet            |      0      |      0       |
-| Max pooling       |      0      |      0       |
-| k-Max pooling     |      0      |      0       |
+| Convolution       |      0      |     38.52    |
+| KMaxPooling       |      0      |     39.19    |
+| MaxPooling        |      0      |     37.95    |
 
 <div align="right">[ <a href="#Table-Of-Content">↑ to top ↑</a> ]</div>
 
