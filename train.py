@@ -12,19 +12,20 @@ from utils import (
     check_accuracy,
     save_plot)
 
-# Hyper parameters
+# Hyperparameters and other settings
 LEARNING_RATE = 0.01
 MOMENTUM = 0.9
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 BATCH_SIZE = 128
 MAX_LENGTH = 1024
-NUM_EPOCHS = 1
+NUM_EPOCHS = 400
 PATIENCE = 40
 NUM_WORKERS = 4
 PIN_MEMORY = True
 LOAD_MODEL = False
-TRAIN_DIR = "dataset/amazon/train.csv"
-TEST_DIR = "dataset/amazon/test.csv"
+TRAIN_DIR = "dataset/yahoo/train.csv"
+TEST_DIR = "dataset/yahoo/test.csv"
+WEIGHT_DIR = "result/something/checkpoint.pth.tar"
 
 
 def train_fn(epoch, loader, model, optimizer, loss_fn, scaler):
@@ -65,9 +66,9 @@ def train_fn(epoch, loader, model, optimizer, loss_fn, scaler):
 
 
 def main():
-    model = VDCNN(depth=9, n_classes=5, want_shortcut=True, pool_type='vgg').to(DEVICE)
+    model = VDCNN(depth=9, n_classes=10, want_shortcut=False, pool_type='resnet').to(DEVICE)
     if LOAD_MODEL:
-        load_checkpoint(torch.load("my_checkpoint.pth.tar"), model)
+        load_checkpoint(torch.load(WEIGHT_DIR), model)
     optimizer = optim.SGD(model.parameters(), lr=LEARNING_RATE, momentum=MOMENTUM)
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min',
                                                      factor=0.1, patience=int(PATIENCE / 2), threshold=0.0001,

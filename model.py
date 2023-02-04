@@ -22,7 +22,7 @@ class FirstConvLayer(nn.Module):
 
 
 class ConvolutionalBlock(nn.Module):
-    def __init__(self, in_channels, out_channels, want_shortcut, downsample, last_layer, pool_type='vgg'):
+    def __init__(self, in_channels, out_channels, want_shortcut, downsample, last_layer, pool_type):
         super(ConvolutionalBlock, self).__init__()
 
         self.want_shortcut = want_shortcut
@@ -92,7 +92,7 @@ class FullyConnectedBlock(nn.Module):
 
 
 class VDCNN(nn.Module):
-    def __init__(self, depth, n_classes, want_shortcut=True, pool_type='VGG'):
+    def __init__(self, depth, n_classes, want_shortcut, pool_type):
         super(VDCNN, self).__init__()
         channels = [64, 128, 256, 512]
         if depth == 9:
@@ -115,7 +115,7 @@ class VDCNN(nn.Module):
                     if len(num_conv_block) - 1 == x:
                         last_layer = True
                         self.sequential.append(
-                            ConvolutionalBlock(channels[x], channels[x], want_shortcut, True, last_layer))
+                            ConvolutionalBlock(channels[x], channels[x], want_shortcut, True, last_layer, pool_type))
                     else:
                         self.sequential.append(ConvolutionalBlock(channels[x], channels[x] * 2,
                                                                   want_shortcut, True, last_layer, pool_type))

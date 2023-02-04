@@ -16,7 +16,7 @@ def load_checkpoint(checkpoint, model):
 
 def get_loaders(train_dir, test_dir, batch_size, max_length, num_workers, pin_memory):
 
-    train_ds = AmazonDataset(
+    train_ds = YahooDataset(
         path=train_dir,
         max_length=max_length
     )
@@ -29,7 +29,7 @@ def get_loaders(train_dir, test_dir, batch_size, max_length, num_workers, pin_me
         shuffle=True,
     )
 
-    test_ds = AmazonDataset(
+    test_ds = YahooDataset(
         path=test_dir,
         max_length=max_length
     )
@@ -77,7 +77,7 @@ def save_plot(train_l, train_a, test_l, test_a):
     plt.ylabel('accuracy')
     plt.legend(['Train', 'Valid'])
     plt.title('Train vs Valid Accuracy')
-    plt.savefig('result/Fig_1')
+    plt.savefig('result/accuracy')
     plt.close()
 
     plt.plot(train_l, '-')
@@ -86,5 +86,5 @@ def save_plot(train_l, train_a, test_l, test_a):
     plt.ylabel('losses')
     plt.legend(['Train', 'Valid'])
     plt.title('Train vs Valid Losses')
-    plt.savefig('result/Fig_2')
+    plt.savefig('result/losses')
     plt.close()
