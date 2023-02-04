@@ -21,8 +21,6 @@ This repository is a personal implementation of this paper using PyTorch 1.13.
     - [Yahoo! Answer topic classification](#Yahoo!-Answer-topic-classification)
     - [Amazon Reviews](#Amazon-Reviews)
 - [Training](#Training)
-    - [Yahoo! Answer](#Yahoo!-Answer)
-    - [Amazon Reviews](#Amazon-Reviews)
 - [Result Analysis](#Result-Analysis)
     - [Text Classification](#Text-Classification)
     - [Sentiment Analysis](#Sentiment-Analysis)
