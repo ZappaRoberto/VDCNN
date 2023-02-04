@@ -9,7 +9,7 @@
 ![Release](https://img.shields.io/github/v/release/ZappaRoberto/VDCNN?color=purple)
 
 
-VDCNN is a neural network that use deep architectures of many convolutional layers to approach text classification and sentiment analysis using up to 49 layers.
+VDCNN is a neural network that use deep architectures of many convolutional layers to approach [Text Classification](https://en.wikipedia.org/wiki/Document_classification) and [Sentiment Analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) using up to 49 layers.
 You could read the original paper at the following [link](https://aclanthology.org/E17-1104/).
 This repository is a personal implementation of this paper using [PyTorch 1.13](https://pytorch.org/). 
 
