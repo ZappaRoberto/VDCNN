@@ -199,14 +199,14 @@ TEST_DIR = "dataset/amazon/test.csv"
 
 > **Note**
 > 
-> Change **`TRAIN_DIR`** and **`TEST_DIR`** with your local position of the datasets.
+> Change **`TRAIN_DIR`** and **`TEST_DIR`** with your datasets local position.
 
 The train_fn function is build to run one epoch and return the average loss and accuracy of the epoch.
 
 ```python
 
 def train_fn(epoch, loader, model, optimizer, loss_fn, scaler):
-    # a bunch of code line
+    # a bunch of code
     return train_loss, train_accuracy
 ```
 
@@ -233,7 +233,7 @@ def main():
         # run 1 epoch
         # check accuracy
         # save model if test_loss < min_test_loss
-        # mange patience
+        # mange patience for early stopping
     save_plot(train_l, train_a, test_l, test_a)
     sys.exit()
 ```
