@@ -11,7 +11,6 @@
 
 VDCNN is a neural network that use deep architectures of many convolutional layers to approach text classification and sentiment analysis using up to 49 layers.
 You could read the original paper at the following [link](https://aclanthology.org/E17-1104/).
-
 This repository is a personal implementation of this paper using PyTorch 1.13. 
 
 
@@ -19,7 +18,7 @@ This repository is a personal implementation of this paper using PyTorch 1.13.
 
 - [Architecture Analysis](#Architecture-Analysis)
 - [Dataset](#Dataset)
-    - [Yahoo! Answer](#Yahoo!-Answer)
+    - [Yahoo! Answer topic classification](#Yahoo!-Answer-topic-classification)
     - [Amazon Reviews](#Amazon-Reviews)
 - [Training](#Training)
     - [Yahoo! Answer](#Yahoo!-Answer)
@@ -147,8 +146,28 @@ The last class named VDCNN build all the layer in the right way and with the var
 
 ## Dataset
 
-The dataset used for the training part are the [Yahoo! Answers Topic Classification](https://www.kaggle.com/datasets/b78db332b73c8b0caf9bd02e2f390bdffc75460ea6aaaee90d9c4bd6af30cad2) and a subset of [Amazon review data](https://cseweb.ucsd.edu/~jmcauley/datasets/amazon_v2/) that can be downloaded [here](https://drive.google.com/file/d/0Bz8a_Dbh9QhbZVhsUnRWRDhETzA/view?usp=share_link&resourcekey=0-Rp0ynafmZGZ5MflGmvwLGg).
+The dataset used for the training part are the [Yahoo! Answers Topic Classification](https://www.kaggle.com/datasets/b78db332b73c8b0caf9bd02e2f390bdffc75460ea6aaaee90d9c4bd6af30cad2) and a subset of [Amazon review data](https://cseweb.ucsd.edu/~jmcauley/datasets/amazon_v2/) that can be downloaded [here](https://drive.google.com/file/d/0Bz8a_Dbh9QhbZVhsUnRWRDhETzA/view?usp=share_link&resourcekey=0-Rp0ynafmZGZ5MflGmvwLGg). All this datasets are maneged by Dataset class inside dataset.py file. 
 
+
+### Yahoo! Answer topic classification
+
+The Yahoo! Answers topic classification dataset is constructed using the 10 largest main categories. Each class contains 140000 training samples and 6000 testing samples. Therefore, the total number of training samples is 1400000, and testing samples are 60000. The categories are:
+
+* Society & Culture
+* Science & Mathematics
+* Health
+* Education & Reference
+* Computers & Internet
+* Sports
+* Business & Finance
+* Entertainment & Music
+* Family & Relationships
+* Politics & Government
+
+
+### Amazon Reviews
+
+The Amazon Reviews dataset is constructed using 5 categories (star ratings).
 
 
 > **Warning**
