@@ -238,7 +238,11 @@ def main():
     sys.exit()
 ```
 
-**`get_loaders`**, **`save_checkpoint`**, **`load_checkpoint`**, **`check_accuracy`**, **`save_plot`** that are use inside tran.py file are function that can be find inside utils.py.
+> **Note**
+> 
+> Remember to change **`n_classes`** from 5 to 10 if you use Amazon dataset or Yahoo! Answer dataset.
+
+**`get_loaders`**, **`save_checkpoint`**, **`load_checkpoint`**, **`check_accuracy`** and **`save_plot`**  are function used inside tran.py that can be finded inside utils.py.
 
 
 
