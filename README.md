@@ -241,7 +241,7 @@ For computational limitation I trained the models only with depth 9. the result 
 |     Pool Type     |  My Result  | Paper Result |
 | :---------------: | :---------: | :----------: |
 | Convolution       |    32.57    |     28.10    |
-| KMaxPooling       |      0      |     28.24    |
+| KMaxPooling       |    28.92    |     28.24    |
 | MaxPooling        |      0      |     27.60    |
 
 
