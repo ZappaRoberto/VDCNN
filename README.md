@@ -242,7 +242,7 @@ For computational limitation I trained the models only with depth 9. the result 
 | :---------------: | :---------: | :----------: |
 | Convolution       |    32.57    |     28.10    |
 | KMaxPooling       |    28.92    |     28.24    |
-| MaxPooling        |      0      |     27.60    |
+| MaxPooling        |    28.40    |     27.60    |
 
 
 ### Sentiment Analysis
