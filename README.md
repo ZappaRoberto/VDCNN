@@ -4,9 +4,7 @@
 
 # Very Deep Convolutional Networks for Text Classification
 
-[![Total Downloads](https://img.shields.io/github/downloads/ZappaRoberto/VDCNN/total.svg)]()
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-![Release](https://img.shields.io/github/v/release/ZappaRoberto/VDCNN?color=purple)
 
 
 VDCNN is a neural network that use deep architectures of many convolutional layers to approach [Text Classification](https://en.wikipedia.org/wiki/Document_classification) and [Sentiment Analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) using up to 49 layers.
