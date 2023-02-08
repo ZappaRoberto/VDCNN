@@ -251,7 +251,7 @@ For computational limitation I trained the models only with depth 9. the result 
 | :---------------: | :---------: | :----------: |
 | Convolution       |    40.35    |     38.52    |
 | KMaxPooling       |    38.58    |     39.19    |
-| MaxPooling        |      0      |     37.95    |
+| MaxPooling        |    38.45    |     37.95    |
 
 <div align="right">[ <a href="#Table-Of-Content">↑ to top ↑</a> ]</div>
 
