@@ -81,4 +81,4 @@ class AmazonDataset(Dataset):
 
 if __name__ == "__main__":
     # YahooDataset("dataset/test.csv")
-    AmazonDataset("dataset/amazon/test.csv")
+    AmazonDataset("dataset/amazon/train.csv")
