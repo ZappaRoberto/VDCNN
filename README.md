@@ -4,9 +4,7 @@
 
 # Very Deep Convolutional Networks for Text Classification
 
-[![Total Downloads](https://img.shields.io/github/downloads/ZappaRoberto/VDCNN/total.svg)]()
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-![Release](https://img.shields.io/github/v/release/ZappaRoberto/VDCNN?color=purple)
 
 
 VDCNN is a neural network that use deep architectures of many convolutional layers to approach [Text Classification](https://en.wikipedia.org/wiki/Document_classification) and [Sentiment Analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) using up to 49 layers.
@@ -240,18 +238,18 @@ For computational limitation I trained the models only with depth 9. the result 
 
 |     Pool Type     |  My Result  | Paper Result |
 | :---------------: | :---------: | :----------: |
-| Convolution       |      0      |     28.10    |
-| KMaxPooling       |      0      |     28.24    |
-| MaxPooling        |      0      |     27.60    |
+| Convolution       |    32.57    |     28.10    |
+| KMaxPooling       |    28.92    |     28.24    |
+| MaxPooling        |    28.40    |     27.60    |
 
 
 ### Sentiment Analysis
 
 |     Pool Type     |  My Result  | Paper Result |
 | :---------------: | :---------: | :----------: |
-| Convolution       |      0      |     38.52    |
-| KMaxPooling       |      0      |     39.19    |
-| MaxPooling        |      0      |     37.95    |
+| Convolution       |    40.35    |     38.52    |
+| KMaxPooling       |    38.58    |     39.19    |
+| MaxPooling        |    38.45    |     37.95    |
 
 <div align="right">[ <a href="#Table-Of-Content">↑ to top ↑</a> ]</div>
 
@@ -260,7 +258,3 @@ For computational limitation I trained the models only with depth 9. the result 
 You can't use it MUHAHAHAHAHAH
 
 <div align="right">[ <a href="#Table-Of-Content">↑ to top ↑</a> ]</div>
-
-## Support 🌟
-
-<a href="https://www.buymeacoffee.com/5Zn8Xh3l9" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
