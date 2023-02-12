@@ -255,6 +255,6 @@ For computational limitation I trained the models only with depth 9. the result 
 
 ## How to use
 
-You can't use it MUHAHAHAHAHAH
+After training run main.py file changing variable **`WEIGHT_DIR`** with the local directory where the weight are saved
 
 <div align="right">[ <a href="#Table-Of-Content">↑ to top ↑</a> ]</div>
