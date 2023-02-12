@@ -16,7 +16,7 @@ def load_checkpoint(checkpoint, model):
 
 def get_loaders(train_dir, test_dir, batch_size, max_length, num_workers, pin_memory):
 
-    train_ds = AmazonDataset(
+    train_ds = YahooDataset(
         path=train_dir,
         max_length=max_length
     )
@@ -29,7 +29,7 @@ def get_loaders(train_dir, test_dir, batch_size, max_length, num_workers, pin_me
         shuffle=True,
     )
 
-    test_ds = AmazonDataset(
+    test_ds = YahooDataset(
         path=test_dir,
         max_length=max_length
     )

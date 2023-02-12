@@ -5,6 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/dataset/amazon" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/dataset/amazon" />
+    <content url="file://$MODULE_DIR$/dataset/yahoo" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
