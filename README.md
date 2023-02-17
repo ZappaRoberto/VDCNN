@@ -100,7 +100,7 @@ in this piece of code we build the core part of the convolutional block, as show
                 self.want_shortcut = False
                 self.sequential.append(nn.AdaptiveMaxPool1d(8))
             else:
-                if pool_type == 'resnet':
+                if pool_type == 'convolution':
                     self.conv1 = nn.Conv1d(in_channels=in_channels, out_channels=in_channels,
                                            kernel_size=3, stride=2, padding=1, bias=False)
                 elif pool_type == 'kmax':
